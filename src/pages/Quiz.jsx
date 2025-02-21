@@ -19,7 +19,7 @@ const Quiz = () => {
         if (prevTime.asSeconds() <= 1) {
           clearInterval(timer);
           setTimeUp(true);
-          setScore(0); 
+          setScore(0);
           return moment.duration(0);
         }
         return moment.duration(prevTime.asSeconds() - 1, "seconds");
@@ -97,7 +97,7 @@ const Quiz = () => {
           </Stack>
         )}
 
-        {(currentQuestionIndex === quiz.length - 1 || timeUp) && (
+        {((currentQuestionIndex === quiz.length - 1 && answered) || timeUp) && (
           <>
             {!timeUp && (
               <Typography variant="h6" textAlign="center" sx={{ marginTop: 3 }}>
