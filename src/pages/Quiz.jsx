@@ -51,6 +51,20 @@ const Quiz = () => {
     setReattempts((prev) => prev + 1);
     setShowAttempts(false);
     setTimeUp(false);
+
+    // Restart Timer
+    clearInterval(timerRef.current); // Clear any previous timer
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime.asSeconds() <= 1) {
+          clearInterval(timerRef.current);
+          setTimeUp(true);
+          setScore(0);
+          return moment.duration(0);
+        }
+        return moment.duration(prevTime.asSeconds() - 1, "seconds");
+      });
+    }, 1000);
   };
 
   const handleShowAttempts = () => {
