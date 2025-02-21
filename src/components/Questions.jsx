@@ -16,6 +16,8 @@ const Questions = ({
   type,
   setAnswered,
   setScore,
+  stopTimer,
+  isLastQuestion
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [userInput, setUserInput] = useState();
@@ -38,6 +40,7 @@ const Questions = ({
         setScore((prevScore) => prevScore + 1);
       }
       setAnswered(true);
+      if (isLastQuestion) stopTimer();
     }
   };
 
@@ -48,6 +51,7 @@ const Questions = ({
       setScore((prevScore) => prevScore + 1);
     }
     setAnswered(true);
+    if (isLastQuestion) stopTimer();
   };
 
   return (

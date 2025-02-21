@@ -1,10 +1,12 @@
 import { Container, Paper, Stack, Typography, Button } from "@mui/material";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Questions from "../components/Questions";
 import { quiz } from "../data/data.json";
 
 const Quiz = () => {
+  const timerRef = useRef(null);
+
   const [timeLeft, setTimeLeft] = useState(moment.duration(30, "minutes"));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answered, setAnswered] = useState(false);
@@ -14,10 +16,10 @@ const Quiz = () => {
   const [timeUp, setTimeUp] = useState(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    timerRef.current = setInterval(() => {
       setTimeLeft((prevTime) => {
         if (prevTime.asSeconds() <= 1) {
-          clearInterval(timer);
+          clearInterval(timerRef.current);
           setTimeUp(true);
           setScore(0);
           return moment.duration(0);
@@ -26,14 +28,19 @@ const Quiz = () => {
       });
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(timerRef.current);
   }, []);
+
+  // Stop timer when last question is submitted
+  const stopTimer = () => {
+    clearInterval(timerRef.current);
+  };
 
   const handleNext = () => {
     if (currentQuestionIndex < quiz.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setAnswered(false);
-    }
+    } else clearInterval(timerRef.current);
   };
 
   const handleReattempt = () => {
@@ -73,6 +80,8 @@ const Quiz = () => {
               {...currentQuestion}
               setAnswered={setAnswered}
               setScore={setScore}
+              stopTimer={stopTimer}
+              isLastQuestion={currentQuestionIndex === quiz.length - 1}
             />
           ) : (
             <Typography variant="h6" textAlign="center" color="error">
