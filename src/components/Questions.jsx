@@ -18,7 +18,7 @@ const Questions = ({
   setScore,
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
-  const [userInput, setUserInput] = useState("");
+  const [userInput, setUserInput] = useState();
   const [isCorrect, setIsCorrect] = useState(null);
 
   // Reset answered status when the question changes
@@ -84,6 +84,7 @@ const Questions = ({
           <TextField
             label="Your Answer"
             variant="outlined"
+            type="number"
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
             disabled={isCorrect !== null}
@@ -92,7 +93,7 @@ const Questions = ({
           <Button
             variant="outlined"
             onClick={handleSubmit}
-            disabled={isCorrect !== null}
+            disabled={isCorrect !== null || userInput.trim() === ""}
             sx={{ width: "30%" }}
           >
             Submit
