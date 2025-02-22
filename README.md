@@ -64,3 +64,26 @@ quiz-app/
 - Click **"Next"** to move to the next question.
 - The **timer stops when the last question is submitted**.
 - Click **"Reattempt Quiz"** to restart the quiz with a fresh timer.
+
+
+## Live Demo
+Check out the deployed application: **[Quiz App](https://dacoid-react-js.vercel.app)**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
